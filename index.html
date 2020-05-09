@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDoリスト</title>
+  <style>
+    section {
+      width: 980px;
+      margin: auto;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+    li {
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+  <section class="todo">
+    <h1>ToDoリスト</h1>
+    <form>
+      <div class="todo-task">
+        <input type="radio" name="task" value="all" checked><label>すべて</label>
+        <input type="radio" name="task" value="wip""><label>作業中</label>
+        <input type="radio" name="task" value="done"><label>完了</label>  
+      </div>
+      <table class="todo-list" id="list">
+        <tr>
+          <th>ID</th>
+          <th>コメント</th>
+          <th>状態</th>
+          <th></th>
+        </tr>
+      </table>
+      <div class="todo-add">
+        <h2>新規タスクの追加</h2>
+        <input type="text" id="text">
+        <button type="button" onclick="todoAdd();">実行</button>
+      </div>
+    </form>
+  </section>
+  <script>
+  function todoAdd() {
+    const list = document.getElementById('list');
+    const listNumber = document.querySelectorAll('tr');
+    const elm = document.createElement('tr');
+    const text = document.getElementById('text');
+    elm.innerHTML = `<td>${ listNumber.length - 1 }</td><td>${ text.value }</td><td><button>作業中</button></td><td><button>削除</button></td>`;
+    list.appendChild(elm);
+    text.value = '';
+  };
+  </script>
+</body>
+</html>
