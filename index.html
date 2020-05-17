@@ -4,19 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ToDoリスト</title>
-  <style>
-    section {
-      width: 980px;
-      margin: auto;
-    }
-    ul {
-      margin: 0;
-      padding: 0;
-    }
-    li {
-      list-style: none;
-    }
-  </style>
+  <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
   <section class="todo">
@@ -54,18 +42,35 @@
     const todos = [];
     btn.addEventListener('click', () => {
       const todo = {
+        index: todos.length,
         task: text.value,
-        status: '作業中'
+        status: '作業中',
+        del: '削除'
       }
       todos.push(todo);
-      dislayTodos(todo.task, todo.status);
+      dislayTodos(todos);
     });
-    const dislayTodos = (todoTask, todoStatus) => {
-      const elm = document.createElement('tr');
-      elm.innerHTML = `<td>${ todos.length - 1 }</td><td>${ todoTask }</td><td><button>${ todoStatus }</button></td><td><button>削除</button></td>`;
-      list.appendChild(elm);
+    const dislayTodos = (todos) => {
+      while (list.firstChild) list.removeChild(list.firstChild);
+      for(let todo in todos) {
+        const elm = document.createElement('tr');
+        for(let key in todos[todo]) {
+          if(key == 'status' || key == 'del') {
+            const td = document.createElement('td');
+            const btn = document.createElement('button');
+            btn.textContent = todos[todo][key];
+            td.appendChild(btn);
+            elm.appendChild(td);
+          } else {
+            const td = document.createElement('td');
+            td.textContent = todos[todo][key];
+            elm.appendChild(td);
+          }
+        }
+        list.appendChild(elm);
+      }
       text.value = '';
-    } 
+    }
   }());
   </script>
 </body>
