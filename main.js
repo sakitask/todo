@@ -22,8 +22,15 @@
           const td = document.createElement('td');
           const btn = document.createElement('button');
           btn.textContent = todos[todo][key];
+          btn.type = 'button';
           td.appendChild(btn);
           elm.appendChild(td);
+          if(key == 'del') {
+            btn.onclick = function() {
+              todos.splice(todo, 1);
+              dislayTodos(todos);
+            };
+          }
         } else {
           const td = document.createElement('td');
           td.textContent = todos[todo][key];
