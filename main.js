@@ -1,44 +1,59 @@
 (function () {
   const list = document.getElementById('list');
   const text = document.getElementById('text');
-  const btn = document.getElementById('btn');
+  const add = document.getElementById('add');
   const todos = [];
-  btn.addEventListener('click', () => {
+  add.addEventListener('click', () => {
     const todo = {
-      index: todos.length,
       task: text.value,
-      status: '作業中',
-      del: '削除'
+      status: '作業中'
     }
     todos.push(todo);
-    dislayTodos(todos);
+    displayTodos(todos);
   });
-  const dislayTodos = (todos) => {
+const createDeleteBtn = (index) => {
+  const btn = document.createElement('button');
+  btn.textContent = '削除';
+  btn.type = 'button';
+  btn.onclick = () => {
+    todos.splice(index, 1);
+    displayTodos(todos);
+  }
+  return btn;
+}
+const createStatusBtn = (status) => {
+  const btn = document.createElement('button');
+  btn.textContent = status;
+  btn.type = 'button';
+  return btn;
+}
+
+  const displayTodos = (todos) => {
     while (list.firstChild) list.removeChild(list.firstChild);
-    for(let todo in todos) {
+    let count = -1;
+    todos.forEach(todo => {
       const elm = document.createElement('tr');
-      for(let key in todos[todo]) {
-        if(key == 'status' || key == 'del') {
-          const td = document.createElement('td');
-          const btn = document.createElement('button');
-          btn.textContent = todos[todo][key];
-          btn.type = 'button';
-          td.appendChild(btn);
-          elm.appendChild(td);
-          if(key == 'del') {
-            btn.onclick = function() {
-              todos.splice(todo, 1);
-              dislayTodos(todos);
-            };
-          }
-        } else {
-          const td = document.createElement('td');
-          td.textContent = todos[todo][key];
-          elm.appendChild(td);
+      count++;
+      for(let i = 0; i < 4; i++) {
+        const td = document.createElement('td');
+        switch (i) {
+          case 0:
+            td.textContent = count;
+            break;
+          case 1:
+            td.textContent = todo['task'];
+            break;
+          case 2:
+            td.appendChild(createStatusBtn('作業中'));
+            break;
+          case 3:
+            td.appendChild(createDeleteBtn(count));
+            break;
         }
-      }
+        elm.appendChild(td);
+      };
       list.appendChild(elm);
-    }
+    });
     text.value = '';
   }
 }());
