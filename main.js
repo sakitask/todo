@@ -15,10 +15,10 @@ const createDeleteBtn = (index) => {
   const btn = document.createElement('button');
   btn.textContent = '削除';
   btn.type = 'button';
-  btn.onclick = () => {
+  btn.addEventListener('click', () => {
     todos.splice(index, 1);
     displayTodos(todos);
-  }
+  });
   return btn;
 }
 const createStatusBtn = (status) => {
@@ -31,27 +31,20 @@ const createStatusBtn = (status) => {
   const displayTodos = (todos) => {
     while (list.firstChild) list.removeChild(list.firstChild);
     let count = -1;
-    todos.forEach(todo => {
+    todos.forEach((todo, index) => {
       const elm = document.createElement('tr');
-      count++;
-      for(let i = 0; i < 4; i++) {
-        const td = document.createElement('td');
-        switch (i) {
-          case 0:
-            td.textContent = count;
-            break;
-          case 1:
-            td.textContent = todo['task'];
-            break;
-          case 2:
-            td.appendChild(createStatusBtn('作業中'));
-            break;
-          case 3:
-            td.appendChild(createDeleteBtn(count));
-            break;
-        }
-        elm.appendChild(td);
-      };
+      const idTd = document.createElement('td');
+      idTd.textContent = index;
+      elm.appendChild(idTd);
+      const taskTd = document.createElement('td');
+      taskTd.textContent = todo['task'];
+      elm.appendChild(taskTd);
+      const statusTd = document.createElement('td');
+      statusTd.appendChild(createStatusBtn('作業中'));
+      elm.appendChild(statusTd);
+      const deleteTd = document.createElement('td');
+      deleteTd.appendChild(createDeleteBtn(index));
+      elm.appendChild(deleteTd);
       list.appendChild(elm);
     });
     text.value = '';
