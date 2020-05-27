@@ -21,10 +21,18 @@ const createDeleteBtn = (index) => {
   });
   return btn;
 }
-const createStatusBtn = (status) => {
+const createStatusBtn = (status, index) => {
   const btn = document.createElement('button');
   btn.textContent = status;
   btn.type = 'button';
+  btn.addEventListener('click', () => {
+    if(todos[index]['status'] === '作業中') {
+      todos[index]['status'] = '完了';
+    } else {
+      todos[index]['status'] = '作業中';
+    }
+    btn.textContent = todos[index]['status'];
+  });
   return btn;
 }
 
@@ -40,7 +48,7 @@ const createStatusBtn = (status) => {
       taskTd.textContent = todo['task'];
       elm.appendChild(taskTd);
       const statusTd = document.createElement('td');
-      statusTd.appendChild(createStatusBtn('作業中'));
+      statusTd.appendChild(createStatusBtn('作業中', index));
       elm.appendChild(statusTd);
       const deleteTd = document.createElement('td');
       deleteTd.appendChild(createDeleteBtn(index));
