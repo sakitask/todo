@@ -2,7 +2,8 @@
   const list = document.getElementById('list');
   const text = document.getElementById('text');
   const add = document.getElementById('add');
-  const task = document.getElementsByName('task');
+  const form = document.getElementById('form');
+  const statusList = form.list;
   const todos = [];
   add.addEventListener('click', () => {
     const todo = {
@@ -59,8 +60,8 @@ const allChange = () => {
     list.children[index].style.display = 'table-row';
   });
 }
-const taskChange = () => {
-  task.forEach((item, index) => {
+const statusChange = () => {
+  statusList.forEach((item, index) => {
     if(item.checked) {
       switch(item.value) {
         case 'wip':
@@ -76,11 +77,11 @@ const taskChange = () => {
     }
   });
 }
-task.forEach((task) => {
-  task.addEventListener('click', () => {
-    taskChange();
+
+  form.addEventListener('change', () => {
+    statusChange();
   });
-});
+
 const displayTodos = (todos) => {
   while (list.firstChild) list.removeChild(list.firstChild);
   let count = -1;
@@ -93,14 +94,16 @@ const displayTodos = (todos) => {
     taskTd.textContent = todo['task'];
     elm.appendChild(taskTd);
     const statusTd = document.createElement('td');
-    statusTd.appendChild(createStatusBtn(todos[index]['status'], index));
+    const statusBtn = createStatusBtn(todos[index]['status'], index)
+    statusTd.appendChild(statusBtn);
     elm.appendChild(statusTd);
     const deleteTd = document.createElement('td');
-    deleteTd.appendChild(createDeleteBtn(index));
+    const deleteBtn = createDeleteBtn(index)
+    deleteTd.appendChild(deleteBtn);
     elm.appendChild(deleteTd);
     list.appendChild(elm);
   });
   text.value = '';
-  taskChange();
+  statusChange();
 }
 }());
