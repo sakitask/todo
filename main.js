@@ -30,8 +30,10 @@ const createStatusBtn = (status, index) => {
   btn.addEventListener('click', () => {
     if(todos[index]['status'] === '作業中') {
       todos[index]['status'] = '完了';
+      statusChange();
     } else {
       todos[index]['status'] = '作業中';
+      statusChange();
     }
     btn.textContent = todos[index]['status'];
   });
