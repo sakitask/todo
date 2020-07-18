@@ -41,7 +41,7 @@ const createStatusBtn = (status, index) => {
 }
 const wipChange = () => {
   todos.forEach((todo, index) => {
-    if(todo['status'] == '作業中') {
+    if(todo['status'] === '作業中') {
       list.children[index].style.display = 'table-row';
     } else {
       list.children[index].style.display = 'none';
@@ -50,7 +50,7 @@ const wipChange = () => {
 }
 const doneChange = () => {
   todos.forEach((todo, index) => {
-    if(todo['status'] == '完了') {
+    if(todo['status'] === '完了') {
       list.children[index].style.display = 'table-row';
     } else {
       list.children[index].style.display = 'none';
@@ -86,7 +86,6 @@ const statusChange = () => {
 
 const displayTodos = (todos) => {
   while (list.firstChild) list.removeChild(list.firstChild);
-  let count = -1;
   todos.forEach((todo, index) => {
     const elm = document.createElement('tr');
     const idTd = document.createElement('td');
